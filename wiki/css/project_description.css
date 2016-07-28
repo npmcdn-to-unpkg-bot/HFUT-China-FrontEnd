@@ -1,0 +1,24 @@
+#HFUT-content .ai-team-head img{
+	width: 6%;
+	height: 6%;
+	float: left;
+}
+#HFUT-content .ai-team-head .ai-team-name{
+	font-size: 2rem;
+	color: rgb(153,0,102);
+	padding-top: 2%;
+}
+#HFUT-content .ai-project-description h3{
+	font-size: 2.5rem;
+	color: rgb(153,0,51);
+}
+#HFUT-content .ai-project-description p{
+	text-align: left;
+	font-size: 1.3rem;
+}
+#HFUT-content .ai-project-description .ai-main-introduction{
+	text-align: center;
+}
+#HFUT-content .ai-project-description .ai-main-introduction img{
+	max-width: 100%;
+}
