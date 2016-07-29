@@ -6,35 +6,35 @@ var hfutSwiper = new Swiper('.HFUT-china-container', {
 });
 
 $('.HFUT-Home').click(function(){
-	hfutSwiper.slideTo(0, 1000, false);//切换到第一个slide，速度为1秒
-});
-
-$('.HFUT-Team').click(function(){
 	hfutSwiper.slideTo(1, 1000, false);//切换到第一个slide，速度为1秒
 });
 
-$('.HFUT-Project').click(function(){
+$('.HFUT-Team').click(function(){
 	hfutSwiper.slideTo(2, 1000, false);//切换到第一个slide，速度为1秒
 });
 
-$('.HFUT-Parts').click(function(){
+$('.HFUT-Project').click(function(){
 	hfutSwiper.slideTo(3, 1000, false);//切换到第一个slide，速度为1秒
 });
 
-$('.HFUT-Safety').click(function(){
+$('.HFUT-Parts').click(function(){
 	hfutSwiper.slideTo(4, 1000, false);//切换到第一个slide，速度为1秒
 });
 
-$('.HFUT-Attributions').click(function(){
+$('.HFUT-Safety').click(function(){
 	hfutSwiper.slideTo(5, 1000, false);//切换到第一个slide，速度为1秒
 });
 
-$('.HFUT-Human').click(function(){
+$('.HFUT-Attributions').click(function(){
 	hfutSwiper.slideTo(6, 1000, false);//切换到第一个slide，速度为1秒
 });
 
-$('.HFUT-Awards').click(function(){
+$('.HFUT-Human').click(function(){
 	hfutSwiper.slideTo(7, 1000, false);//切换到第一个slide，速度为1秒
+});
+
+$('.HFUT-Awards').click(function(){
+	hfutSwiper.slideTo(8, 1000, false);//切换到第一个slide，速度为1秒
 });
 
 var team = new Swiper('.HFUT-china-team', {
