@@ -23,7 +23,7 @@ bio_pro.controller('proController', function($scope, $http, $location, $mdSidena
 	$scope.init = function(){
 		var login_token = JSON.parse(sessionStorage.getItem('login'));
 		var opt = {
-			url: '/home/getProject',
+			url: '/home/getUserProject',
 			method: 'POST',
 			data: {
 				token: login_token
@@ -32,11 +32,11 @@ bio_pro.controller('proController', function($scope, $http, $location, $mdSidena
 		};
 		$http(opt).success(function(data){
 			if(data.successful){
-				var projects = data.projects;
+				var projects = data.data;
 				for (var i = 0;i < projects.length;i++) {
 					$scope.project_info.push({
-						id:projects[i].id,
-						name:projects[i].name,
+						id:projects[i].project_id,
+						name:projects[i].project_name,
 						devices:[],
 						isDeviceShowed:true,
 						track:projects[i].track,
@@ -50,7 +50,17 @@ bio_pro.controller('proController', function($scope, $http, $location, $mdSidena
 	
 	//发送http请求获取下标为index对应的project_info的所有分支
 	$scope.getDevices = function(index, id){
-		$http.get("/home/getChainList?id=" + id).success(function(data) {
+		var login_token = JSON.parse(sessionStorage.getItem('login'));
+		var opt = {
+			url: '/home/getUserDevice',
+			method: 'POST',
+			data: {
+				token: login_token
+				id: id
+			},
+			headers: { 'Content-Type': 'application/json'}
+		};
+		$http(opt).success(function(data) {
 			$scope.project_info[index].devices = data;
 		});
 	}
