@@ -5,6 +5,7 @@ bio_pro.controller('proController', function($scope, $http, $location, $mdSidena
 	$scope.isEdit = false;//默认编辑状态为未编辑
 	$scope.isChosen = false;//默认未选中
 	$scope.device_img_src = "img/logo_design.png";//主体图
+	$scope.length = 0;
 	
 	//反转分支的显示状态
 	$scope.toggle_device = function(index){
@@ -20,8 +21,15 @@ bio_pro.controller('proController', function($scope, $http, $location, $mdSidena
 	
 	//发送http请求从后台数据库导入项目列表到变量project_info中
 	$scope.init = function(){
-		$http.get("/home/getUserProject").success(function(data){
-			if(data.isSuccessful){
+		var login_token = JSON.parse(sessionStorage.getItem('login'));
+		var opt = {
+			url: '/home/getProject',
+			method: 'POST',
+			data: login_token,
+			headers: { 'Content-Type': 'application/json'}
+		};
+		$http(opt).success(function(data){
+			if(data.successful){
 				var projects = data.projects;
 				for (var i = 0;i < projects.length;i++) {
 					$scope.project_info.push({
@@ -78,7 +86,7 @@ bio_pro.controller('proController', function($scope, $http, $location, $mdSidena
   		var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
   		$mdDialog.show({
   			controller:NewDeviceCtrl,
-  			templateUrl:'./html/new_device.tmp.html',
+  			templateUrl:'html/new_device.tmp.html',
   			parent:angular.element(document.body),
   			targetEvent:ev,
   			clickOutsideToClose:true,
@@ -101,7 +109,7 @@ bio_pro.controller('proController', function($scope, $http, $location, $mdSidena
   		var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
   		$mdDialog.show({
   			controller:NewProjectCtrl,
-  			templateUrl:'./html/new_project.tmp.html',
+  			templateUrl:'html/new_project.tmp.html',
   			parent:angular.element(document.body),
   			targetEvent:ev,
   			clickOutsideToClose:true,
@@ -139,7 +147,7 @@ bio_pro.controller('proController', function($scope, $http, $location, $mdSidena
 		});
 	}
 	
-	//页面初始化
+	// 页面初始化
 	$scope.init();
   	
 });
