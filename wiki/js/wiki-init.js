@@ -1,5 +1,6 @@
 var hfutSwiper = new Swiper('.HFUT-china-container', {
     pagination: '.swiper-pagination',
+    mousewheelControl: true,
     loop:true,
     spaceBetween: 0,
     centeredSlides: true
@@ -40,42 +41,3 @@ $('.HFUT-Awards').click(function(){
 $('.HFUT-aboutus').click(function(){
 	hfutSwiper.slideTo(9, 1000, false);
 });
-//var team = new Swiper('.HFUT-china-team', {
-//  pagination: '.team-pagination',
-//  paginationClickable: true,
-//  direction: 'vertical',
-//  spaceBetween: 0,
-//  mousewheelControl: true
-//});
-//
-//var project = new Swiper('.HFUT-china-project', {
-//  pagination: '.project-pagination',
-//  paginationClickable: true,
-//  direction: 'vertical',
-//  spaceBetween: 0,
-//  mousewheelControl: true
-//});
-//
-//var project = new Swiper('.HFUT-china-parts', {
-//  pagination: '.parts-pagination',
-//  paginationClickable: true,
-//  direction: 'vertical',
-//  spaceBetween: 0,
-//  mousewheelControl: true
-//});
-//
-//var hunmanPractice = new Swiper('.HFUT-china-hunman-practice', {
-//  pagination: '.hunman-practice-pagination',
-//  paginationClickable: true,
-//  direction: 'vertical',
-//  spaceBetween: 0,
-//  mousewheelControl: true
-//});
-//
-//var awards = new Swiper('.HFUT-china-awards', {
-//  pagination: '.awards-pagination',
-//  paginationClickable: true,
-//  direction: 'vertical',
-//  spaceBetween: 0,
-//  mousewheelControl: true
-//});
