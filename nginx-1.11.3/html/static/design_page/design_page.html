@@ -27,16 +27,17 @@
             <md-list layout="row" layout-wrap layout-margin layout-align="center">
                 <md-input-container class="ai-edit-search">
                     <label>Search</label>
-                    <input type="text" ng-model="key_word">
+                    <input type="text" ng-model="key_word" ng-keypress="search_by_keyboard($event,key_word)">
                 </md-input-container>
                 <md-button class="md-icon-button btn-search" ng-click="getSearchResult(key_word)">
                 	<md-icon md-svg-src="img/search.svg" aria-label="search"></md-icon>
                 </md-button>
             </md-list>
-            <div id='test'>
-		    	<div class='search_item' ng-repeat="gene in search_info">
-                        <img src="'../img/ss' + {{gene.img}} + '.png'" alt="gene_img">
-						<span>{{gene.name}}</span>
+            <div id='test' ng-sortable="pullConfig">
+		    	<div ng-repeat="gene in search_info">
+                    <img class='handle search_item' src="img/drag_handle.svg" alt="drag_img">
+                    <img ng-src="{{gene.img}}" alt="gene_img">
+					<span>{{gene.name}}</span>
 					<md-divider></md-divider>
 				</div>
 	      	</div>
@@ -53,55 +54,24 @@
   		</md-toolbar>
   		<md-content class="layout-row flex" layout="row">
 			<div class="layout-column flex" layout="column" flex="80">
-				<div id="dashboard" flex="66" class="ai-edit-main row">
-                    <canvas id="design_background"></canvas>
+				<div id="dashboard" flex="66" class="ai-edit-main row" ng-sortable="putConfig">
+					<div ng-repeat="gene in chain_info" ng-class="{'pull_right':gene.float_right,'pull_left':gene.float_left,'line':gene.line,'lt':gene.lt,'rt':gene.rt,'lb':gene.lb,'rb':gene.rb}">
+	                    <img ng-src="{{gene.img}}" alt="gene_img" ng-click="getGeneInfo(gene.name)">
+						<span>{{gene.name}}</span>
+					</div>
 				</div>
-                <div flex layout="row">
-				    <div flex = '60' id="recommend" flex="34">
-                        <!-- <div class = 'recommend_item' ng-repeat="gene in search_info | filter:gene_name">
-                            <div>
-                                <img src="../icons/Coding_large.png" alt="">
-                                <span>{{gene.img}}</span>
-                                <span>{{gene.name}}</span>
-                            </div>
-                        </div> -->
-                        <div class = 'row recommend_list'>
-                            <div class = 'col-lg-3 col-md-3 col-sm-3 col-xs-3 recommend_item'>
-                                <div>
-                                    <img src="../icons/Coding_large.png" alt="">
-                                    <br>
-                                    <span>bba_111111</span>
-                                </div>
-                            </div>
-                            <div class = 'col-lg-3 col-md-3 col-sm-3 col-xs-3 recommend_item'>
-                                <div>
-                                    <img src="../icons/Coding_large.png" alt="">
-                                    <br>
-                                    <span>2</span>
-                                </div>
-                            </div>
-                            <div class = 'col-lg-3 col-md-3 col-sm-3 col-xs-3 recommend_item'>
-                                <div>
-                                    <img src="../icons/Coding_large.png" alt="">
-                                    <br>
-                                    <span>3</span>
-                                </div>
-                            </div>
-                            <div class = 'col-lg-3 col-md-3 col-sm-3 col-xs-3 recommend_item'>
-                                <div>
-                                    <img src="../icons/Coding_large.png" alt="">
-                                    <br>
-                                    <span>4</span>
-                                </div>
-                            </div>
+                <div flex layout="row" class="md-whiteframe-z2 re">
+				    <div flex = '60' id="recommend" flex="34" ng-sortable="recommendConfig">
+                       	<div ng-repeat="gene in recommend_info" class='recommend_item'>
+                            <img ng-src="{{gene.img}}" alt="gene_img">
+                            <span>{{gene.name}}</span>
                         </div>
 				    </div>
                     <div id='clipboard' flex>
-                        <p class="md-title">剪贴板</p>
                     </div>
 			    </div>
             </div>
-			<md-card layout="column" flex="20" tabindex="-1" class="md-whiteframe-z2" layout-padding>
+			<md-card layout="column" flex="20" tabindex="-1" class="md-whiteframe-z2" id='info_card' layout-padding>
 				<md-card-title-text>
 					<h2>Part Name</h2>
 				</md-card-title-text>
@@ -120,7 +90,10 @@
 					<h4>Score: {{score}}</h4>
 				</md-card-title-text>
 				<md-card-title-text>
-					<h4>Papers: {{papers}}</h4>
+					<h4>Papers:</h4>
+					<ol ng-repeat="p in papers">
+						<li><a ng-href="{{p.url}}">{{p.name}}</a></li>
+					</ol>
 				</md-card-title-text>
 			</md-card>
   		</md-content>
@@ -128,7 +101,6 @@
 
     <script src="../public/analytics/analytics.js"></script>
     <script src="../public/jquery/dist/jquery.js"></script>
-    <script src="../public/Sortable/Sortable/jquery.fn.sortable.js"></script>
 	<script src="../public/bootstrap/dist/js/bootstrap.js"></script>
   	<script src="../public/angular/angular.js"></script>
   	<script src="../public/angular-animate/angular-animate.js"></script>
@@ -136,7 +108,9 @@
   	<script src="../public/angular-aria/angular-aria.js"></script>
   	<script src="../public/angular-messages/angular-messages.js"></script>
   	<script src="../public/angular-material/angular-material.js"></script>
+  	<script src="../public/angular-sortable/Sortable.js"></script>
+  	<script src="../public/angular-sortable/ng-sortable.js"></script>
     <script src="./js/design_page.js"></script>
-  	<script src="./js/dashboard.js"></script>
+    <!-- <script src="./js/dashboard_bg.js"></script> -->
 </body>
 </html>

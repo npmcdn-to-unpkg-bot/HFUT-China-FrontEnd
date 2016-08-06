@@ -1,32 +1,94 @@
-#design_background {
-    position:absolute;
-    top:0px;
-    left:0px;
-    z-index:-1;
-}
 .info{
     display:inline-block;
 }
 #dashboard{
     list-style: none;
+    overflow :auto;
 }
 #dashboard div{
-    float:left;
     cursor: move;
+    width:20%;
+    height: 20%;
+    text-align: center;
 }
+
+
+#dashboard div span{
+    display:block;
+}
+
+#dashboard div img{
+    margin-top: 10%;
+}
+
 #dashboard div md-divider{
     display: none;
 }
 .search_item{
-    background: #106CC8;
     cursor: move;
-}
-#dashboard{
-    overflow :auto;
 }
 #recommend{
     margin-left: 5px;
+    overflow :auto;
 }
 #clipboard{
+    background:url('../img/ljt.jpg');
+    background-size:contain;
+}
+
+.pull_left{
+    float:left;
+}
+
+.pull_right{
+    float:right;
+}
+
+.handle{
+    margin-right: 10%;
+}
+
+.line{
+    background:url('../img/x_bg.png');
+    background-size:100%;
+}
+
+.rt{
+    background:url('../img/rt_bg.png');
+    background-size:100%;
+}
+
+.rb{
+    background:url('../img/rb_bg.png');
+    background-size:100%;
+}
+
+.lt{
+    background:url('../img/lt_bg.png');
+    background-size:100%;
+}
+
+.lb{
+    background:url('../img/lb_bg.png');
+    background-size:100%;
+}
+
+.recommend_item{
+    width: 25%;
+    min-height: 30%;
+    float:left;
+    background:url('../img/x_bg.png');
+    background-size:contain;
+}
+
+.recommend_item span{
+    display:block;
+}
+
+.re{
+    margin-bottom: 8px;
+}
+
+#info_card{
     overflow :auto;
 }

@@ -69,9 +69,13 @@ bio_pro.controller('proController', function($scope, $http, $location, $mdSidena
 	}
 	
 	//点击分支事件，反转isChosen状态，改为选中；同步中间基因链的图
-	$scope.device_clicked = function(device_id) {
+	$scope.device_clicked = function(device_id,project_id,len) {
 		$scope.addr += device_id;
 		$scope.isChosen = true;
+		$scope.length = len;
+		console.log(device_id);
+		sessionStorage.setItem('chain_id',JSON.stringify(device_id));
+		sessionStorage.setItem('project_id',JSON.stringify(project_id));
 		$http.get("/home/getResultImage?id=" + device_id).success(function(data) {
 			if (data.successful) {
 				console.log(data);
@@ -96,6 +100,10 @@ bio_pro.controller('proController', function($scope, $http, $location, $mdSidena
   	$scope.openLeftMenu = function() {
     	$mdSidenav('left').toggle();
   	};
+  	
+  	$scope.jumpToDesign = function(){
+  		window.location.href = "../design_page/design_page.html";
+  	}
   	
   	//显示新建分支窗口
   	$scope.showNewDeviceDialog = function(ev, project_id){
@@ -145,10 +153,12 @@ bio_pro.controller('proController', function($scope, $http, $location, $mdSidena
 	
 	//删除项目
 	$scope.delete_project = function(index, id){
+		var login_token = JSON.parse(sessionStorage.getItem('login'));
 		var opt = {
 			url: '/home/deleteProject',
 			method: 'POST',
 			data: JSON.stringify({
+				token: login_token,
 				project_id:id
 			}),
 			headers: { 'Content-Type': 'application/json'}
@@ -227,10 +237,12 @@ function NewDeviceCtrl($scope, $mdDialog, $http, $mdToast, project_id){
 	}
 	
 	$scope.create_device = function(){
+		var login_token = JSON.parse(sessionStorage.getItem('login'));
 		var opt = {
 			url: "/home/createProjectDevice",
 			method: 'POST',
 			data: JSON.stringify({
+				token: login_token,
 				device_name: $scope.new_device_name,
 				project_id: project_id
 			}),
@@ -305,7 +317,7 @@ function NewProjectCtrl($scope, $mdDialog, $http, $mdToast){
 	}
 }
 
-function LogOutCtrl($scope, $mdDialog){
+function LogOutCtrl($scope, $mdDialog, $http){
 	
 	$scope.hide = function(){
 		$mdDialog.hide();
@@ -316,8 +328,24 @@ function LogOutCtrl($scope, $mdDialog){
 	}
 	
 	$scope.log_out = function(){
-		$mdDialog.hide();
-		window.location.href = "../login_register/login_register.html";
+		var login_token = JSON.parse(sessionStorage.getItem('login'));
+		var opt = {
+			url: '/accounts/logout',
+			method: 'POST',
+			data: JSON.stringify({
+				token: login_token,
+			}),
+			headers: {'Content-Type': 'application/json'}
+		};
+		$http(opt).success(function(data){
+			if (data.successful) {
+				$mdDialog.hide();
+				window.location.href = "../login_register/login_register.html";
+			} else{
+				
+			}
+		});
+		
 	}
 }
 
@@ -341,7 +369,7 @@ function ChangePasswordCtrl($scope, $mdDialog, $http, $mdToast){
 	 	} else {
 			var login_token = JSON.parse(sessionStorage.getItem('login'));
 			var opt = {
-				url: '/home/changePassword',
+				url: '/accounts/changePassword',
 				method: 'POST',
 				data: JSON.stringify({
 					token: login_token,
