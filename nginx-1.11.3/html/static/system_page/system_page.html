@@ -13,7 +13,7 @@
 	<!-- Favicon and touch icons -->
     <link rel="shortcut icon" href="img/logo_black_small.png">
 </head>
-<body class="docs-body layout-row" layout="row" ng-controller="systemController">
+<body class="docs-body layout-row" id='my_body' layout="row" ng-controller="systemController">
 	<div id="edit-sidebar"  layout="row">
 		<!-- side bar -->
 	  	<md-sidenav md-component-id="left" tabindex="-1" class="site-sidenav md-sidenav-left md-whiteframe-z2 hide-print md-closed ng-isolate-scope md-locked-open" md-is-locked-open="$mdMedia('gt-sm')">
@@ -34,7 +34,7 @@
             </md-list>
             <div>
 		    	<div ng-repeat="compound in compound_info">
-		    		<md-button class="md-icon-button" ng-click="addCompoundTags(compound.name)">
+		    		<md-button class="md-icon-button" ng-click="addCompoundTags(compound)">
 	                	<md-icon md-svg-src="img/plus.svg" aria-label="add"></md-icon>
 	                </md-button>
 					<span ng-click="getCompoundInfo(compound.id)">{{compound.name}}</span>
@@ -50,15 +50,48 @@
 				<div layout="row" flex class="fill-height layout-row flex">
 					<md-button class="md-raised" ng-click="runCompoundTags()">Run</md-button>
 					<md-button class="md-raised" ng-click="removeAllCompoundTags()">Remove All</md-button>
-					<md-chips ng-model="compound_tags"></md-chips>
+					<md-chips ng-model="compound_tags">
+						<md-chip-template>
+					        <span>
+					          	<strong>{{$chip.name}}</strong>
+					        </span>
+				      	</md-chip-template>
+					</md-chips>
+					<span flex></span>
+                    <div class="md-toolbar-item docs-tools layout-row" layout="row">
+                    	<md-button class="md-raised md-accent ai-gr" aria-label="Project" ng-click="jumpToProject()">Project</md-button>
+                    	<md-button class="md-raised md-accent ai-gr" aria-label="Gene" ng-click="jumpToGene()">Gene Relationship</md-button>
+				      	<md-button class="md-raised md-accent ai-sr" aria-label="System" ng-click="jumpToSystem()">System</md-button>
+				       	<md-menu md-position-mode="target-right target" >
+				          	<md-button aria-label="menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+				            	<md-icon md-menu-origin md-svg-icon="img/account.svg"></md-icon>
+				          	</md-button>
+				          	<md-menu-content width="2">
+				            	<md-menu-item>
+				              		<md-button ng-click="showChangePasswordDialog($event)">
+				                  		<div layout="row" flex>
+				                    		<p flex>Change Password</p>
+				                  		</div>
+				              		</md-button>
+				            	</md-menu-item>
+				            	<md-menu-item>
+				              		<md-button ng-click="showLogOutDialog($event)">
+				                  		<div layout="row" flex>
+				                    		<p flex>LogOut</p>
+				                  		</div>
+				              		</md-button>
+				            	</md-menu-item>
+				          	</md-menu-content>
+				        </md-menu>
+                    </div>
 				</div>
 			</div>
   		</md-toolbar>
   		<md-content class="layout-row flex" layout="row">
-			<div class="layout-column flex" layout="column" flex="80">
+			<div id="my-svg" class="layout-column flex" layout="column" flex="80">
 				
-            </div>
-			<md-card layout="column" flex="20" tabindex="-1" class="md-whiteframe-z2" layout-padding>
+           	</div>
+			<md-card class="ai-message-info" ng-hide="message_show" layout="column" flex="20" tabindex="-1" class="md-whiteframe-z2" layout-padding>
 				<md-card-title-text>
 					<h2>Message</h2>
 				</md-card-title-text>
@@ -81,6 +114,26 @@
 					<h4>formula: {{formula}}</h4>
 				</md-card-title-text>
 			</md-card>
+			<md-card class="ai-gene-message-info" ng-hide="gene_message_show" layout="column" flex="20" tabindex="-1" class="md-whiteframe-z2" layout-padding>
+				<md-card-title-text>
+					<h2>Gene Message</h2>
+				</md-card-title-text>
+				<md-card-title-text>
+					<h4>gene-id: {{gene_id}}</h4>
+				</md-card-title-text>
+				<md-card-title-text>
+					<h4>name: {{gene_name}}</h4>
+				</md-card-title-text>
+				<md-card-title-text>
+					<h4>definition: {{definition}}</h4>
+				</md-card-title-text>
+				<md-card-title-text>
+					<h4>organism_short: {{organism_short}}</h4>
+				</md-card-title-text>
+				<md-card-title-text>
+					<h4>organism: {{organism}}</h4>
+				</md-card-title-text>
+			</md-card>
   		</md-content>
   	</div>
 
@@ -93,6 +146,8 @@
   	<script src="../public/angular-aria/angular-aria.js"></script>
   	<script src="../public/angular-messages/angular-messages.js"></script>
   	<script src="../public/angular-material/angular-material.js"></script>
+  	<script src="../public/d3/d3.min.js"></script>
     <script src="js/system_page.js"></script>
+    <script src="js/draw.js"></script>
 </body>
 </html>
